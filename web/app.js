@@ -65,7 +65,7 @@ const API = {
     },
 
     async relayEmail(id, relayTo = '') {
-        const url = relayTo 
+        const url = relayTo
             ? `${API_BASE}/emails/${id}/actions/relay/${encodeURIComponent(relayTo)}`
             : `${API_BASE}/emails/${id}/actions/relay`;
         const response = await fetch(url, {
@@ -83,7 +83,7 @@ function connectWebSocket() {
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         const wsUrl = `${protocol}//${window.location.host}/api/v1/ws`;
         const ws = new WebSocket(wsUrl);
-        
+
         ws.onopen = () => {
             console.log('WebSocket connected');
         };
@@ -145,7 +145,7 @@ function renderEmailList() {
     }
 
     container.innerHTML = state.emails.map(email => {
-        const from = email.from && email.from.length > 0 
+        const from = email.from && email.from.length > 0
             ? email.from[0].address || email.from[0].name || '未知发件人'
             : '未知发件人';
         const time = formatTime(email.time);
@@ -188,7 +188,7 @@ function renderEmailDetail() {
     }
 
     const email = state.currentEmail;
-    const from = email.from && email.from.length > 0 
+    const from = email.from && email.from.length > 0
         ? formatAddress(email.from[0])
         : '未知发件人';
     const to = email.to && email.to.length > 0
@@ -249,9 +249,9 @@ function renderAttachments(attachments, emailId) {
         <div class="email-detail-attachments">
             <h3>附件 (${attachments.length})</h3>
             ${attachments.map(att => {
-                // 使用新的 API v1 端点：/api/v1/emails/:id/attachments/:filename
-                const url = `${API_BASE}/emails/${emailId}/attachments/${encodeURIComponent(att.generatedFileName)}`;
-                return `
+        // 使用新的 API v1 端点：/api/v1/emails/:id/attachments/:filename
+        const url = `${API_BASE}/emails/${emailId}/attachments/${encodeURIComponent(att.generatedFileName)}`;
+        return `
                     <div class="attachment-item">
                         <div class="attachment-item-info">
                             <div class="attachment-item-name">${escapeHtml(att.fileName || att.generatedFileName)}</div>
@@ -260,7 +260,7 @@ function renderAttachments(attachments, emailId) {
                         <a href="${url}" class="attachment-item-download" download>下载</a>
                     </div>
                 `;
-            }).join('')}
+    }).join('')}
         </div>
     `;
 }
@@ -416,10 +416,10 @@ function formatTime(timeStr) {
 
 function formatAddress(addr) {
     if (typeof addr === 'string') return addr;
-    if (addr.name && addr.address) {
-        return `${addr.name} <${addr.address}>`;
+    if (addr.Name && addr.Address) {
+        return `${addr.Name} <${addr.Address}>`;
     }
-    return addr.address || addr.name || '未知';
+    return addr.Address || addr.Name || '未知';
 }
 
 function formatBytes(bytes) {
@@ -476,7 +476,7 @@ function initTheme() {
 function setTheme(theme) {
     const body = document.body;
     const themeToggle = document.getElementById('themeToggle');
-    
+
     if (theme === 'dark') {
         body.classList.remove('light-theme');
         body.classList.add('dark-theme');
@@ -486,7 +486,7 @@ function setTheme(theme) {
         body.classList.add('light-theme');
         if (themeToggle) themeToggle.textContent = '🌙';
     }
-    
+
     localStorage.setItem('theme', theme);
 }
 
